@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<header>
+  <link rel= 'stylesheet' href="index.css">
+</header>
+    <body>
+        <section class='header1'>
+        <nav>
+            <div class='nav-links' id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+
+                <ul>
+                    <li><a href="index.html" type="html/text">HOME</a></li>
+                    <li><a href="about.html" type="html/text">ABOUT</a></li>
+                   <!-- <li><a href="">BLOG</a></li>-->
+                </ul>
+		<h1>About</h1>
+</div>
+</nav>
+</section>
+
+
+<footer>
+  <p>2023 windyGarlic - Have a nice day.</p>
+</footer>
+
+</html>
+
+
+/////////////////////////////////
+
+
+<article>
+    <h2>IDENTIFY MALWARE
+      PROCESS EXPLORER</h2>
+      <b>Look at running processes by running Process 
+          Explorer (GUI) and identify potential indicators of 
+          compromise:</b>
+          <ul>
+              <li><p class="smaller-txt"> </p></li>
+              <li><p class="smaller-txt">  </p></li>
+              <li><p class="smaller-txt"></p></li>
+              <li><p class="smaller-txt"> </p></li>
+              <li><p class="smaller-txt">  </p></li>
+          </ul>
+</article>
