@@ -15,7 +15,7 @@
                         <li><a href="about.html" type="html/text">ABOUT</a></li>
                         <!-- <li><a href="">BLOG</a></li>-->
                     </ul>
-                    <h1>Unlocking the Power of Google Sheets API with Python</h1>
+                    <h1>Dealing with large datasets: Google sheets API and Python</h1>
                 </div>
             </nav>
         </section>
@@ -44,8 +44,6 @@
                     <img style="height: 200px; width: 400px;"  src="6DownloadJsom.png"> <br>
                     <p class="smaller-txt">Now we download the json file and save it as credentials.json in the directory that we are working in.</p>
 
-                    <p class="smaller-txt">After creating your Oauth client ID download and save it as credentials.json in the directory you will be working in.</p>
-
                     <h3>Step 2: Requirements</h3>
                     <p class="smaller-txt"> We will also need to get the python modules to start interacting with the sheets. run te following command: </p>
 
@@ -70,7 +68,7 @@
     <b>SPREADSHEET_ID</b> = ''
     <b>SCOPES</b> = ["https://www.googleapis.com/auth/spreadsheets"]
 
-    def auth():
+    def <b class='g'>auth</b>():
     <b>credentials</b> = None
     <b class="p">if</b> os.<b>path</b>.exists('<b class="b">token.json</b>'):
         <b>credentials</b> = Credentials.from_authorized_user_file('<b class="b">token.json</b>', SCOPES)
@@ -84,7 +82,7 @@
             <b>token</b>.write(credentials.to_json())
     <b class="p">return</b> <b>credentials</b>               
                     </pre>
-                    <p class="smaller-txt">Here are all the imports we will need. We also have two variables, SCOPES and SPREADSHEET_ID we will set the spreadsheet id later. There is also a function defined called auth() which will handle authentication and the creation of the token.<br> The next step will be to make two functions. One will be for handling querying data the other will export the data to the google sheet.</p>
+                    <p class="smaller-txt">Here are all the imports we will need. We also have two variables, SCOPES and SPREADSHEET_ID we will set the spreadsheet id later. There is also a function defined called auth() which will handle authentication and the creation of the token.<br> The next step will be to make three functions. One will be for handling querying data the other will export the data to the google sheet and the last will be to find the next empy row on the sheet.</p>
 
                     <pre class="code">                        
     def <b class='g'>index</b>(credentials, sheetName, startIndex, endIndex):
@@ -119,7 +117,7 @@
                 </article>
 
                 <article class="smaller-txt">
-                    Now we should have all the functions we need to interact with the sheet. To uplead some data to the sheet we will used getCellNumber(), and populate().
+                    Now we should have all the functions we need to interact with the sheet. To upload some data to the sheet we will used getCellNumber(), and populate().
                 </article>
 
                 <pre class="code">
