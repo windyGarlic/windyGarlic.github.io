@@ -59,8 +59,6 @@ b {
   color: darkorange;
 }
 
-=======
->>>>>>> 0696f9788c7398cb8a2be462cafe3f9b20a6a9e3
 body {
   background: #000000;
   color: white;
@@ -89,13 +87,11 @@ code {
   height: 350px;
 }
 
-<<<<<<< HEAD
 .code {
     font-size: 16px;
     color: lime
 }
 =======
->>>>>>> 0696f9788c7398cb8a2be462cafe3f9b20a6a9e3
 .top-left-image {
   position: fixed;
   top: 10px; /* Adjust the top position as needed */
