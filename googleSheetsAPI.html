@@ -57,6 +57,8 @@
 
 
                     <pre class="code" >
+    <b class="b">from </b>google.auth.transport.requests import Request
+    <b class="b">import </b>os
     <b class="b">from </b>httplib2 import Credentials
     <b class="b">from </b>google.auth.transport.requests import Request
     <b class="b">from </b>google.oauth2.credentials import Credentials
@@ -72,7 +74,7 @@
     <b class="p">if</b> os.<b>path</b>.exists('<b class="b">token.json</b>'):
         <b>credentials</b> = Credentials.from_authorized_user_file('<b class="b">token.json</b>', SCOPES)
     <b class="p">if</b> not <b>credentials</b> or not <b>credentials</b>.valid:
-        <b class="p">if</b> <b>credentials</b> and<b>credentials</b>.expired and <b>credentials</b>.refresh_token:
+        <b class="p">if</b> <b>credentials</b> and <b>credentials</b>.expired and <b>credentials</b>.refresh_token:
             <b>credentials</b>.refresh(Request())
         <b class="p">else:</b>
             <b>flow</b> = InstalledAppFlow. from_client_secrets_file("<b class="b">credentials.json</b>", SCOPES)
@@ -87,15 +89,17 @@
     def <b class='g'>index</b>(credentials, sheetName, startIndex, endIndex):
         <b>service</b> = build('sheets', "v4", <b>credentials</b>=credentials)
         <b>sheets</b> = service.spreadsheets()
-        <b>result</b> = sheets.values().get(spreadsheetId=spreadsheet_id,
+        <b>result</b> = sheets.values().get(spreadsheetId=SPREADSHEET_ID,
             range=f"{sheetName}!{startIndex}:{endIndex}").execute()
     
         <b>values</b> = result.get('values', [])
         return <b>values</b>
     
     def <b class="g">populate</b>(cellNumber,sheets,letter,input): 
-        <b>result</b> = sheets.values().update(spreadsheetId=spreadsheet_id,
-        <b>range</b>=f'{sheetName}!{letter}{str(cellNumber)}', 
+        <b>service</b> = build('sheets', "v4", credentials=credentials)
+        <b>sheets</b> = service.spreadsheets()
+        <b>result</b> = sheets.values().update(spreadsheetId=SPREADSHEET_ID,
+        <b>range</b>=f'Sheet1!{letter}{str(cellNumber)}', 
         <b>valueInputOption</b>='USER_ENTERED', body={'values':   [[input]]}).execute()
     
     def <b class='g'>getCellNumber</b>(credentials, SPREADSHEET_ID):
@@ -119,7 +123,7 @@
 
                 <pre class="code">
     <b>credentials</b> = <b class=g>auth</b>()
-    <b>cellNumber</b> = <b class=g>cellNumber</b>(credentials, SPREADSHEET_ID)
+    <b>cellNumber</b> = <b class=g>getCellNumber</b>(credentials, SPREADSHEET_ID)
     <b class=g>populate</b>(cellNumber,'<b class="b">Sheet1</b>', '<b class="b">A</b>', "<b class="b">row 1</b>")
     <b class=g>populate</b>(cellNumber,'<b class="b">Sheet1</b>', '<b class="b">B</b>', "<b class="b">row 1, col 2</b>")
                 </pre>
