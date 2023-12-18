@@ -1,31 +1,112 @@
+
 h1 {
-  color: magenta;
+  color: #f7be00;
+  text-shadow: 2px 2px 2px #430889;
   display: block;
+  letter-spacing: 1px;
   font-size: 2em;
-  margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
+  margin-block-start: 1.0em;
+  margin-block-end: 0.0em;
   font-weight: bold;
 }
 
+bt2 {
+  padding-right: 30px;
+}
+
+.blog-title {
+  font-size: 28px;
+  color: #f7be00;
+  text-shadow: 2px 2px 2px #430889;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding-left: 420px;
+}
+
+.background-image {
+  position: absolute;
+  top: 0px; /* Adjust the positioning as needed */
+  left: 0;
+  width: 68%;
+  height: 25%;
+  padding-left: 70px;
+  z-index: -1; /* Place the image behind other content */
+}
+
+.header-container {
+  display: ruby;
+  text-align: right;
+  align-items: end;
+
+}
 h2 {
   color: blue;
 }
 
+b {
+  color: rgb(33, 219, 204)
+}
+
+.p {
+  color:#f44336
+}
+
+.b {
+  color: purple
+}
+.g {
+  color: darkorange;
+}
+
 body {
-  background: #202020;
+  background: #000000;
   color: white;
   font-size: 24px;
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 code {
-  color: blue;
+  color: rgb(216, 168, 9);
 }
 
 .smaller-txt {
   font-size: 18px
 }
 
+.bigger-img {
+  width: 800px;
+  height: 500px;
+}
+
+.not-so-big-img {
+  width: 500px;
+  height: 350px;
+}
+
+.code {
+    font-size: 16px;
+    color: lime
+}
+.top-left-image {
+  position: fixed;
+  top: 10px; /* Adjust the top position as needed */
+  left: 10px; /* Adjust the left position as needed */
+  z-index: 1000; /* Adjust the z-index as needed to ensure it's above other content */
+  width: 50px; /* Adjust the width of the image */
+  height: auto; /* This maintains the aspect ratio */
+  padding-top: 2%;
+}
+
+
+.align {
+  padding: 0 15% 0 5%; /* Adjust the padding values as needed */
+  width: 60%; /* Set the width of the content to 60% */
+  margin: 0 auto;
+  padding-right: 40%;
+}
 .info {
   background: #929292;
   color: antiquewhite;
@@ -33,6 +114,8 @@ code {
   padding: 10px;
   border-radius: 10px;
   font-size: 22px;
+  width: 67%;
+  padding-left: 70px;
 }
 
 nav{
@@ -47,7 +130,7 @@ nav img{
 }
 
 .nav-links{
-    flex 1;
+    flex: 1;
     text-align: right;
 }
 

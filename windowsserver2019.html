@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <link rel= 'stylesheet' href="index.css">
+</header>
+    <body>
+        <img src="Untitled.png" alt="Top Left Image" class="top-left-image">
+        <section class='header1'>
+            <img src="banner.png" alt="Background Image" class="background-image">
+        <nav>
+            <a href="index.html"><img src=''></a> 
+            <div class='nav-links' id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+
+                <ul>
+                    <li><a href="index.html" type="html/text">HOME</a></li>
+                    <li><a href="about.html" type="html/text">ABOUT</a></li>
+                   <!-- <li><a href="">BLOG</a></li>-->
+                </ul>
+		<h1>Windows Server 2019</h1>
+</div>
+</nav>
+</section>
+<article class="align">
+
+    <br><br><b>Static IP </b><br>
+    <p class="smaller-txt">Set a static IP for the machine it self and since this server is going to be the DNS server we will add it as our preferred. </p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb751d8ce-70d5-4569-a886-dcd128569da4%2FUntitled.png?id=53493fd6-19bb-4af7-917a-f64f754a5b59&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1480&userId=&cache=v2" class="bigger-img">
+
+
+    <br><br><b>Name</b><br>
+    <p class="smaller-txt">Set name of DC, can also set auto update etc.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F946934e4-398c-45b2-9de7-5389e3ae76a8%2FUntitled.png?id=dd43bcc9-8727-44ad-b0eb-a9b28e95f70b&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1410&userId=&cache=v2" class="bigger-img">
+
+    
+    <br><br><b>Roles and Features</b><br>
+    <p class="smaller-txt">Click manage, then add roles and features and add all the things you want your DC to do. We need DNS, DHCP, and AD-DC services. Grab anything you want though.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F58409273-1fe3-447f-b8cc-3d023b446962%2FUntitled.png?id=74a33cd6-c81c-4084-add1-aca2f4ec53ca&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+
+    
+    <br><br><b>DNS</b><br>
+    <p class="smaller-txt">The DNS manager is under tools. Set a new reverse lookup zone for your IP range.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fed2f61b5-3d01-4b63-b063-a3af3622246f%2FUntitled.png?id=fdfa9be8-98c3-4ce5-b78c-25230ac468d1&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1940&userId=&cache=v2" class="bigger-img">
+
+    
+    <br><br><b>Nslookup</b><br>
+    <p class="smaller-txt">use the nslookup command to check if your domain and IP are registered/cached (I think that how it works?)</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fee3d01ba-b3b5-4800-8076-d6e83ca00eca%2FUntitled.png?id=9ff49c2a-0231-4db4-82d9-90b7ffeda4f5&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1160&userId=&cache=v2" class="bigger-img">
+
+    
+    <br><br><b>DHCP</b><br>
+    <p class="smaller-txt">Go to tools, then DHCP to get to the DHCP manager. Under IPv4 add a new scope.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5fa68f96-38f6-4011-af92-6fd71d0ffcd9%2FUntitled.png?id=72cb056f-e330-499f-aeb7-711431d1cbae&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1820&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">Now set the range of IP’s you want to be able to distribute.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc6ad6935-38d0-49db-b4ca-02f3fa592c35%2FUntitled.png?id=20edf306-d23f-400d-9fe9-7a9fe240ea28&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">You will also need to activate the scope </p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc333ce97-2202-4e06-b2ab-e1b6842fe5c9%2FUntitled.png?id=2c8d9482-3fab-4860-99b2-6eae57364a50&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1520&userId=&cache=v2" class="bigger-img">
+
+
+    <br><br><b>Users</b><br>
+    <p class="smaller-txt">Let’s add a few users and groups so we can log in when we move to the next step of joining another machine into the network. Open tools, AD users and group manager. We are now going to add a new organization unit. An organizational unit is basically just a container </p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7a9d32b0-6491-44f0-95bc-9ade615d8c1a%2FUntitled.png?id=fd1c74fe-85b5-4ea9-b07b-73681a75083f&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">In this container we can make sub-containers to split the different users into there respective departments.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2fac161f-452b-495e-9de9-17af22bf0801%2FUntitled.png?id=cfcccb6a-14a8-4860-9d25-5092505b9ae7&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1480&userId=&cache=v2" class="bigger-img">
+
+
+    <p class="smaller-txt">Create a few new users and make a new global security group. </p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6e7d12fc-8632-4d54-954a-e6c9c22787d8%2FUntitled.png?id=43e7e117-7341-4f97-a7fc-6d7b846d6bce&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">To add members to the new security group, right click on the group, click properties, members, add…, then advanced.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F0506d9b1-8644-4b54-a9bf-f1df680bbfae%2FUntitled.png?id=c0b7746d-3e3e-4753-8c17-9e2d75fa21b5&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1770&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">Click find now and scroll down at the bottom to locate the users you would like to add to the group. </p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff57a086e-a227-4dc6-b0ea-190171456123%2FUntitled.png?id=013a12f1-4952-43f0-be49-701c08625009&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1500&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">With all this out of the way the DC is ready to start dishing out IP addresses and resolving names to IP addresses. So lets add a new machine to the network. I’m using  window 7 pro OS.
+        First you need to join the client machine to the domain.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe298e472-9e72-4d93-a6a3-d005c3204d80%2FUntitled.png?id=f4f5785e-cfe6-4dcd-8f98-005d6729fe31&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1110&userId=&cache=v2" class="bigger-img">
+
+
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F01affc2a-6b54-45b0-9ee9-5918402cbe42%2FUntitled.png?id=532532cb-d439-4b94-a45d-7342b4e3f319&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1110&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">Now you should be able to log in as the user you created.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4ad7a9af-08c3-4945-a53e-a184a1b14c41%2FUntitled.png?id=c6006747-d6fe-4939-9938-e405bca9b1a6&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1290&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">The left is the windows 7 machine and the right is the DC. The W7 box is showing that it is connected to the domain, and that it has received its IP address from the DC. You can also see on the DC in the DHCP manager that it has given out one IP address. </p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1599512a-9f2b-4b51-b51b-8e13f0b887dc%2FUntitled.png?id=1481e97c-bd62-4780-9160-7035d29cbd63&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+    
+    <br><br><b>File Share</b><br>
+    <p class="smaller-txt">Lets create 2 new shares, one for HR and one for the tech department.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F318796ed-b113-46e5-9194-e0b5f1bd8b6e%2FUntitled.png?id=0da55f8a-0352-4c4a-9d95-cb106932a1d2&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1940&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">SMB quick is what we want, but we don't want to share the whole drive so we will click custom path and create the folder on the c: drive so we can share just that location </p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F57b5b404-0569-42aa-8857-0e47ce00f4a6%2FUntitled.png?id=2c733c4e-3fbc-4255-bafd-1835715446e3&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+ 
+    <p class="smaller-txt">Now we have to set the permissions. Select customize permissions then add.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa4f44e3e-7544-451e-b7a2-1dafa93d7d16%2FUntitled.png?id=21940702-e32d-4d84-ac3a-58472eddb5f8&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1930&userId=&cache=v2" class="bigger-img">
+
+    <p class="smaller-txt">Find the security group that you would like to give permissions to. Set the principal and desired permissions for the users.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F78d020a4-ff5c-4497-aec6-a77928130416%2FUntitled.png?id=d00b98e8-6a51-402a-aa4f-058a060c6f64&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1990&userId=&cache=v2" class="bigger-img">
+ 
+    <br><br><b>Remote Desktop</b><br>
+    <p class="smaller-txt">First thing we need to do is allow connections on the client machine. In the remote tab of the advanced system settings we can allow connections.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8eaab7ce-1ed7-41bd-93de-cf70323437bf%2FUntitled.png?id=61cd605a-b930-4493-815a-ad4766386ffe&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=1600&userId=&cache=v2" class="bigger-img">
+ 
+
+    <p class="smaller-txt">Back on the DC we can right click on the user and click add group, we will then add the user to the remote desktop group.</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8abaa5b0-fafe-40ae-a226-180c6e7ee609%2FUntitled.png?id=8926661f-b109-4988-8b47-a07dd4e70f3b&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+ 
+    <p class="smaller-txt">RDP into client machine</p>
+    <img src="https://intelligent-butterkase-f77.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff9ae143b-3a27-43e3-b096-a28124e379bb%2FUntitled.png?id=d7d9b3aa-5d86-4869-af4b-c6b0e5f593b4&table=block&spaceId=85a1e6d4-e02c-41de-b303-19795bade1f0&width=2000&userId=&cache=v2" class="bigger-img">
+ 
+
+   
+   
+</article>
+
+<footer>
+    <p>2023 windyGarlic - Have a nice day.</p>
+  </footer>
+
+</html>

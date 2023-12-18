@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <link rel= 'stylesheet' href="index.css">
+</header>
+    <body>
+        <section class='header1'>
+            <img src="banner.png" alt="Background Image" class="background-image">
+        <nav>
+            <a href="index.html"><img src=''></a> 
+            <div class='nav-links' id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+
+                <ul>
+                    <li><a href="index.html" type="html/text">HOME</a></li>
+                    <li><a href="about.html" type="html/text">ABOUT</a></li>
+                   <!-- <li><a href="">BLOG</a></li>-->
+                </ul>
+		<h1>Blue Team Play Book</h1>
+</div>
+</nav>
+</section>
+
+<main>
+    <section class="align">
+    <article>
+      <h2>Identify Malware: Process Explorer</h2>
+        <b>Look at running processes with Process 
+            Explorer and identify indicators of 
+            compromise:</b>
+            <ul>
+                <li><p class="smaller-txt"> Items with no icon 
+                    Items with no description or company name 
+                     </p></li>
+                <li><p class="smaller-txt"> Unsigned Microsoft images (First add Verified Signer column under View tab->Select Columns,then go to Options tab and choose Verify Image Signatures)</p></li>
+                <li><p class="smaller-txt"> Check all running process hashes in Virus Total (Go to Options tab and select Check VirusTotal.com) </p></li>
+                <li><p class="smaller-txt"> Suspicious files are in Windows directories or user profile </p></li>
+                <li><p class="smaller-txt">   Purple items that are packed or compressed Items with open TCP/IP endpoints </p></li>
+            </ul>
+      <p class='smaller-txt'>  </p>
+</article>
+
+<article>
+      <b>Strings Check</b>
+          <ul>
+              <li><p class="smaller-txt"> Right click on suspicious process in Process 
+                Explorer and on pop up window choose Strings tab 
+                and review for suspicious URLs. Repeat for Image 
+                and Memory radio buttons. </p></li>
+              <li><p class="smaller-txt"> Look for any IP addresses </p></li>
+              <li><p class="smaller-txt"> Look for strange URLs in strings </p></li>
+              <li><p class="smaller-txt"> Also while you are here in this pop up window, click on the TCP/IP tab. Here you can see connections a program is making. </p></li>
+          </ul>
+</article>
+
+<article>
+    <b>DLL View</b>
+        <ul>
+            <li><p class="smaller-txt"> Pop open with Ctrl+D 
+
+               </p></li>
+            <li><p class="smaller-txt"> Look for suspicious DLLs or services </p></li>
+            <li><p class="smaller-txt"> Look for no description or no company name  </p></li>
+            <li><p class="smaller-txt"> Look at VirusTotal Results column  </p></li>
+        </ul>
+</article>
+
+<article>
+    <b>Stop and Remove Malware</b>
+        <ul>
+            <li><p class="smaller-txt"> Right click and select Suspend for any identified suspicious processes </p></li>
+            <li><p class="smaller-txt"> Right click and select Terminate Previous Suspended processes </p></li>
+        </ul>
+</article>
+
+<article>
+    <b>Clean up where malicious files Auto start</b>
+        <ul>
+            <li><p class="smaller-txt"> Launch Autoruns </p></li>
+            <li><p class="smaller-txt"> Under Options, Check the boxes Verify Code Signatures and Hide Microsoft entries 
+                </p></li>
+            <li><p class="smaller-txt"> Look for suspicious process file from earlier steps on the everything tab and uncheck. Safer to uncheck than delete, in case of error.  </p></li>
+            <li><p class="smaller-txt"> Press F5, to refresh Autoruns, and confirm malicious file has not recreated the malicious entry into the previous unchecked auto start location. </p></li>
+        </ul>
+</article>
+
+<article>
+        <h2>Key Questions to Answer</h2>
+        <ul>
+            <li><p class="smaller-txt"> What was the initial attack vector? (i.e., How did the adversary gain initial access to the network?)  </p></li>
+            <li><p class="smaller-txt"> How is the adversary accessing the environment? </p></li>
+            <li><p class="smaller-txt"> Is the adversary exploiting vulnerabilities to achieve access or privilege?   </p></li>
+            <li><p class="smaller-txt">How is the adversary maintaining command and control?  </p></li>
+            <li><p class="smaller-txt">Does the actor have persistence on the network or device?   </p></li>
+            <li><p class="smaller-txt">What is the method of persistence (e.g., malware backdoor, webshell, legitimate credentials, remote tools, etc.)? </p></li>
+            <li><p class="smaller-txt">What accounts have been compromised and what privilege level (e.g., domain admin, local admin, user account, etc.)? </p></li>
+            <li><p class="smaller-txt">What method is being used for reconnaissance? (Discovering the reconnaissance method may provide an opportunity for detection and to determine possible intent.)   </p></li>
+            <li><p class="smaller-txt">Is lateral movement suspected or known? How is lateral movement conducted (e.g., RDP, network shares, malware, etc.)?   </p></li>
+            <li><p class="smaller-txt"> Has data been exfiltrated and, if so, what kind and via what mechanism? </p></li>
+
+            <img src="blueTeamPlayBookIMG1.png" class="bigger-img">
+            <p class="smaller-txt">This chart shows how to answer these questions. It shows the specific techniques used<br> at each stage of the attack, as well as indicators of each style of compromise, and  most <br>importantly, where to find artifacts and evedence. </p>
+            
+        </ul>
+</article>
+
+
+<article>
+    <h2>Checklist for Investigation</h2>
+    <p class="smaller-txt">This checklist should be run against every machine suspected of being compromised.</p>
+    <b>Network Connections</b><br>
+    <p class="smaller-txt">Open cmd.exe in administrator mode and type the command:  <code>netstat -nob</code> this will provide a list of all network connections the device is making. Keep an eye out for unusual ports, or suspicious IP addresses.</p>
+</article>
+
+<article>
+    <b>Auto Runs</b>
+    <p class="smaller-txt"></p>
+    <p class="smaller-txt">Check the auto run processes, this is a common place attackers use to maintain persistence. Make sure to check the triggers tab and take note of how often the task is being run, and the conditions that trigger it to run. Check the actions tab of all suspicious auto runs, this can often tell you the exact command or script that is being used by the attacker. Some other thinigs to note: </p>
+    <ul>
+        <li><p class="smaller-txt"> Check login tab and Scheduled tasks  </p></li>
+        <li><p class="smaller-txt"> Yellow is suspicious, it means can't be located  </p></li>
+        <li><p class="smaller-txt">Pink unverified  </p></li>
+        <li><p class="smaller-txt">Check explorer and service tabs  </p></li>
+        <li><p class="smaller-txt">Check drivers tab to look for suspicious drivers  </p></li>
+    </ul>
+</article>
+
+<article>
+    <b>Removeable Media</b>
+        <ul>
+            <li><p class="smaller-txt">     USB, CD, network drives </p></li>
+            <li><p class="smaller-txt">     Check common folders   </p></li>
+        </ul>
+</article>
+
+<article>
+    <b>Email</b>
+        <ul>
+            <li><p class="smaller-txt">         Email clients / Email server  </p></li>
+            <li><p class="smaller-txt">      Check web history   </p></li>
+        </ul>
+</article>
+
+<article>
+    <b>Email</b>
+        <ul>
+            <li><p class="smaller-txt">         Email clients / Email server  </p></li>
+            <li><p class="smaller-txt">      Check web history   </p></li>
+        </ul>
+</article>
+
+
+<article>
+    <b>Modified Files & Folders from the Time of Attack</b>
+        <p class="smaller-txt"> Go into the file explorer and go to the root of the C: drive. In the search bar type: <code> ‘datemodified:today’ </code> replacing 'today' with the day of the attack.</p> 
+</article>
+
+
+<article>
+    <b>Processes: Task manager, Process Explorer, Process Monitor</b>
+        <ul>
+            <li><p class="smaller-txt">     check if process has a publisher and its verified  </p></li>
+            <li><p class="smaller-txt"> check where the process is running from
+                </p></li>
+            <li><p class="smaller-txt">     check parent process  </p></li>
+            <li><p class="smaller-txt">     check virus total  </p></li>
+            <li><p class="smaller-txt">         check web  </p></li>
+            <li><p class="smaller-txt">        check TCP/IP tab for connections  </p></li>
+            <li><p class="smaller-txt">         check strings, look for IP's commands and IOC's  </p></li>
+        </ul>
+</article>
+
+
+<article>
+    <b>Logs: Event Viewer</b>
+        <ul>
+            <li><p class="smaller-txt">       How many systems are still unknown, clear, suspicious, or infected?  </p></li>
+            <li><p class="smaller-txt">     Networking device(s) changes. (Switches, Routers,  Firewalls, IPS, NAC, Wi-Fi, etc.). 
+                </p></li>
+            <li><p class="smaller-txt">         Active Directory OU isolation of suspected systems.  </p></li>
+            <li><p class="smaller-txt">     c    Active Directory - User account restrictions and resets.   </p></li>
+            <li><p class="smaller-txt">            Active Directory policies to prohibit threats from 
+
+                running and/or access.  </p></li>
+            <li><p class="smaller-txt">           Firewall blocks.  </p></li>
+            <li><p class="smaller-txt">         DNS blocks (null route malware site(s).  </p></li>
+            <li><p class="smaller-txt">       Web filtering blocks.  </p></li>
+        </ul>
+</article>
+</section>
+
+</body>
+<footer>
+    <p>2023 windyGarlic - Have a nice day.</p>
+  </footer>
+
+</html>
