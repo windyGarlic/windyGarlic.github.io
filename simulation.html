@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel= 'stylesheet' href="index.css">
+    </header>
+    <body>
+        <section class='header1'>
+            <img src="banner.png" alt="Background Image" class="background-image">
+            <nav>
+                <a href="index.html"><img src=''></a> 
+                <div class='nav-links' id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html" type="html/text">HOME</a></li>
+                        <li><a href="about.html" type="html/text">ABOUT</a></li>
+                        <!-- <li><a href="">BLOG</a></li>-->
+                    </ul>
+                    <h1>Simulating Life with Python</h1>
+                </div>
+            </nav>
+        </section>
+        <main>
+            <section class="align">
+                <article class="smaller-txt">
+                    <p class="smaller-txt">I have recently been obsessed with these evolution simulation on YouTube. If you haven't watched any I would highly recommend it. </p>
+
+                    <img style="width: 800px; height: 325px;" src="ytPic.png">
+
+                    <p class="smaller-txt">Basically by programming “creatures” with a set of rules based on there “species” and displaying them in a graphical representation. Different content creators do this in all kinds of different ways.
+
+                        I thought it would be a fun project for me to try. I have always been interested in evolution and genomes, and lets be honest, who doesn’t want to play god and create their own simulation.
+                        
+                        My first step was to decide on how I would graphically represent my world. I have recently been trying my hand at pixel art.
+                        
+                        <br>ps. I'm not very good. This was supposed to be an apple, it's now a tomato.</p>
+
+                    <img src="apple.png">
+
+                    <p class="smaller-txt">Although it did get thinking about a grid based system for my world, which lead me to a crude idea of creating creatures stored as 3 main values: 
+
+                        <br><br> <b>Position</b> - A grid is great because I could use numeric value to represent X and Y [-25, 13]
+                        <br> <b>Age</b> -  Because nothing escapes time.
+                        <br> <b>DNA</b> - This is a tough one that I am still trying to figure out. I have a few ideas at the moment, im just not sure which would be best.  My first idea was to have the genome be a string of characters where each letter corresponds to a value. A = 100, B = 127, C = 187, D = 134 and reproduction could be handled like this:</p>
+                    
+
+<h2>Creature Genome Structure:</h2>
+<ol>
+    <li>Initial Generation:
+        <ul>
+            <li>Creature A has genome: <strong>ABCCD</strong> (Speed: A, Social: B, Aggression: C, Immunity: D, etc.).</li>
+            <li>Creature B has genome: <strong>BCADD</strong> (Speed: B, Social: C, Aggression: A, Immunity: D, etc.).</li>
+        </ul>
+    </li>
+    <li>Crossover:
+        <ul>
+            <li>Choose a random crossover point (e.g., at the 3rd position)</li>
+            <li>Creature A's genome before crossover: <strong>ABC</strong> + <strong>CD</strong></li>
+            <li>Creature B's genome before crossover: <strong>BCA</strong> + <strong>DD</strong></li>
+            <li>Combine the parts after crossover:
+                <ul>
+                    <li>Child's genome: <strong>ABC</strong> + <strong>DD</strong></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>Mutation (Optional):
+        <ul>
+            <li>Introduce a chance for mutations in the child's genome. For example, randomly change one or more letters:</li>
+            <li>Child's genome after mutation (with a 10% mutation rate): <strong>ABD</strong> + <strong>DD</strong></li>
+        </ul>
+    </li>
+    <li>Create Child:
+        <ul>
+            <li>The child creature is born with the resulting genome:</li>
+            <li>Child's genome: <strong>ABDDD</strong> (Speed: A, Social: B, Aggression: D, Immunity: D, etc.).</li>
+        </ul>
+    </li>
+</ol>
+
+<h2>World Rules:</h2>
+<ul>
+    <li><strong>Plant</strong> - Green Dot
+        <ul>
+            <li>Cannot move</li>
+            <li>Will die after a random age 5-7</li>
+            <li>Will drop seeds over time around it if there is free space</li>
+            <li>Can be eaten by creatures (will disappear)</li>
+            <li>1 age every 5 turns</li>
+        </ul>
+    </li>
+    <br>
+    <li><strong>Seed</strong> - Yellow Dot
+        <ul>
+            <li>Will drop from plants over time</li>
+            <!-- (I haven’t implemented this) Will drop from creature turn 3 and 5 after being eaten -->
+            <li>Will grow to a plant in 2 turns</li>
+        </ul>
+    </li>
+    <br>
+    <li><strong>Creature</strong> - Red Dot
+        <ul>
+            <li>Will move every turn in search of food</li>
+            <li>Can see a 2-tile radius</li>
+            <li>Will move towards food if it 'sees' it</li>
+            <li>Will die after a random age between 80-90</li>
+            <li>Will die if food is empty</li>
+            <li>Can reproduce after age 20 if food is full</li>
+            <li>Will grow 1 age every 5 turns</li>
+            <li>Can move 1 or 2 tiles every turn</li>
+            <li>Food will decrease each turn and increase when a plant is eaten</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Current Band-Aid for Edge Issue:</h2>
+<p>I ran into a few issues along the way, but none that were more annoying than trying to get the creatures to not keep walking into the edge of the map. I tried a few different methods, but nothing has been a great fix. This is the current Band-Aid:</p>
+
+<img style="width: 500px; height: 425px;" src="movementCode.png">
+<p>This issue has lead me to want to learn and incorporate more bias into the creatures, maybe eventually controlling the creatures entire decisions based on weights and bias. It is defiantly something I need to research more. <br><br>
+
+    I gave the creatures a food and age counter that displays on the screen, and a one to keep track of the days. I haven’t yet  introduced the DNA to the creatures yet, so they just make an exact copy of themselves. With all of that in place it was time to test the world here is the first stage:</p>
+</body>
+
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=9FHJA0RXjF0" frameborder="0" allowfullscreen></iframe>
+
+<h2>Conclusion</h2>
+<p>I definitely have a lot more to do before I can say i have made life, but i think this is a good start.
+    This project has made me a better programmer and i look forward to evolving along with these creatures as i continue to work on the project.
+</p>
+
+<b>Code: </b><a href="https://github.com/windyGarlic/life.py"> github.com/windyGarlic/life.py </a>
+
+                </article>
+            </section>
+        </main>
+    </body>
+    <footer>
+        <p>2023 windyGarlic - Have a nice day.</p>
+    </footer>
+</html>
