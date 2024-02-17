@@ -68,8 +68,8 @@
     else
         <b style='color: blue'>curl</b> "<b>$URL</b>" > "<b>$NEW_FILE</b>"
 
-        <b>x</b>>=$(sha256sum "<b>$NEW_FILE</b>" | awk "{print $1}")
-        <b>y</b>>=$(sha256sum "<b>$OLD_FILE</b>" | awk "{print $1}")
+        <b>x</b>=$(sha256sum "<b>$NEW_FILE</b>" | awk "{print $1}")
+        <b>y</b>=$(sha256sum "<b>$OLD_FILE</b>" | awk "{print $1}")
 
         if [ "<b>$x</b>" = "<b>$y</b>" ]; then
                 rm "<b>$NEW_FILE</b>"
