@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel= 'stylesheet' href="index.css">
+    </header>
+    <body>
+        <section class='header1'>
+            <img src="banner.png" alt="Background Image" class="background-image">
+            <nav>
+                <a href="index.html"><img src=''></a> 
+                <div class='nav-links' id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html" type="html/text">HOME</a></li>
+                        <li><a href="about.html" type="html/text">ABOUT</a></li>
+                        <!-- <li><a href="">BLOG</a></li>-->
+                    </ul>
+                    <h1>Monitoring Clientside Code Changes with Cron, Curl and Discord.</h1>
+                    
+                </div>
+            </nav>
+        </section>
+        <main>
+            <section class="align">
+                <article>
+                    <p class='smaller-txt'>Im a big fan how github does its commit history, i've spent many hours scrolling through those christmas colored diffed lines of code looking for secrets. The only problem is that github is massive, and it is really hard to find those needles in the codestack so to say. Not to mention if the codebase is private, theres not much you can do.
+                        <br>
+                        <h2>The Idea</h2> 
+                        <b class="smaller-txt"> What if you could get a diff of any page of any website sent to your phone, kinda.</b> <br>
+                        <p class='smaller-txt'> The one thing you do always have access to is the client side code running on the application. There really shouldnt be any secrets running in client side code, but then again there shouldnt be any secrets in github repos either and we all know thats not always the case. Hmm Hmm <a href=https://www.theregister.com/2020/12/16/solarwinds_github_password.> solarwinds_github_password.</a><br><br>
+                        With some good recon you would be surprised with the interesting files you can find hosted on the web. There is the obvious ones that we can monitor such as JS files, wp-content or wp-json on wordpress sites, html for endpoints (api endpoints), etc. but in this case im most interested in json, txt, php files. </p>
+                        
+                    <ul class="smaller-txt">
+                        <li><p> config.json </p></li>
+                        <li><p>manifest.json </p></li>
+                        <li><p> phpinfo.php </p></li>
+                        <li><p> package.json</p></li>
+                        <li><p>etc.</p></li>
+                    </ul>
+                    <br>
+                        <p class='smaller-txt'>I often find the above mentioned files publicly exposed on websites. Ill come across pages like this and think sweet this will be easy, only to realize they are doing the right thing and not putting the API key in. Although it does makes me wonder if they have done the right thing every single time. </p>
+                        
+                        <img style="height: 220px; width: 900px;"src="monitoring_1.png">
+                        <br><br>
+                        <p class='smaller-txt'>How cool would it be to get a notification of any changes made to this page, so if they ever accidentally  leak the key it would be sent straight to your phone. Or something like this page here, this page is dynamically created, and it rotates through different clientIP addresses over time. These few lines of bash can send you a message with the IP address when it changes. </p>
+                        
+                        <img style="height: 200px; width: 900px;"src="monitoring_2.png">
+                        <br><br>
+                        <p class='smaller-txt'>It can also be useful for monitoring js package versions if you have access to package.json or just for raw js files if you can be bothered parsing through the js. It can be handy for detecting new features added to an app and also finding new endpoints. Here is a made up example of the kinds of things you can find in js files. </p>
+                        
+                        <img style="height: 300px; width: 900px;"src="monitoring_3.png">
+                        <br><br>
+                        <p class='smaller-txt'>I was able to do this by using Discord web hooks, and curl. The script uses curl for the requests, then hashes the new file and compares it with the old file and will send the diff as a message if there are changes. Just add your own discord web hook, and change the url and set it to a cron job, and you will have automated monitoring sent to your Discord.</p>
+                        
+                        <h2>Script</h2>
+                        <pre style="color: limegreen;" class="smaller-txt">
+                        
+    #!/bin/bash
+
+    <b>URL</b>="https://example.com/config.json"
+    <b>NEW_FILE</b>="new.example.config.json"
+    <b>OLD_FILE</b>="example.config.json"
+    <b>DISCORD_WEBHOOK</b>="https://discord.com/api/webhooks/123456789/
+    asfxxxxxxxxxxxxx8E-DxxxxxxxxxZ-IWxxxxxxxxxxxxxxxxxdiIzEyG"
+
+    if [ ! -e "<b>$OLD_FILE</b>" ]; then
+        <b style='color: blue'>curl</b> <b>$URL</b> > <b>$OLD_FILE</b>
+    else
+        <b style='color: blue'>curl</b> "<b>$URL</b>" > "<b>$NEW_FILE</b>"
+
+        <b>x</b>>=$(sha256sum "<b>$NEW_FILE</b>" | awk "{print $1}")
+        <b>y</b>>=$(sha256sum "<b>$OLD_FILE</b>" | awk "{print $1}")
+
+        if [ "<b>$x</b>" = "<b>$y</b>" ]; then
+                rm "<b>$NEW_FILE</b>"
+        else
+                <b style='color: blue'>echo</b> "<b>$URL</b>" > diff.txt
+                <b style='color: blue'>echo</b> "---------------------------" >> diff.txt
+                <b style='color: blue'>echo</b> "" >> diff.txt
+                <b style='color: blue'>diff</b> "<b>$OLD_FILE</b>" "<b>$NEW_FILE</b>" >> diff.txt
+                <b style='color: blue'>curl</b> -X "POST" -F "file=@diff.txt" "<b>$DISCORD_WEBHOOK</b>"
+        fi
+    fi
+                        
+                        </pre>
+                        
+                        <h2>Disclaimer</h2>
+                        
+                        <p class='smaller-txt'>This tool is provided for educational, bug bounty, pen test, ie. ethical security research. The author does not condone, support, or encourage any illegal or malicious activities. The tool should only be used on systems and networks for which you have explicit permission to test. Any misuse or illegal activities conducted with this tool are the sole responsibility of the user. By using this tool, you agree to take full responsibility for your actions and to use it in compliance with applicable laws and regulations.</p>
+                        
+                </article>
+            </section>
+        </main>
+    </body>
+    <footer>
+        <p>2024 windyGarlic - Have a nice day.</p>
+    </footer>
+</html>
