@@ -5,7 +5,7 @@
     </header>
     <body>
         <section class='header1'>
-            <img src="banner.png" alt="Background Image" class="background-image">
+            <img src="img/banner.png" alt="Background Image" class="background-image">
             <nav>
                 <a href="index.html"><img src=''></a> 
                 <div class='nav-links' id="navLinks">
@@ -40,15 +40,15 @@
                     <br>
                         <p class='smaller-txt'>I often find the above mentioned files publicly exposed on websites. Ill come across pages like this and think sweet this will be easy, only to realize they are doing the right thing and not putting the API key in. Although it does makes me wonder if they have done the right thing every single time. </p>
                         
-                        <img style="height: 220px; width: 900px;"src="monitoring_1.png">
+                        <img style="height: 220px; width: 900px;"src="img/monitoring_1.png">
                         <br><br>
                         <p class='smaller-txt'>How cool would it be to get a notification of any changes made to this page, so if they ever accidentally  leak the key it would be sent straight to your phone. Or something like this page here, this page is dynamically created, and it rotates through different clientIP addresses over time. These few lines of bash can send you a message with the IP address when it changes. </p>
                         
-                        <img style="height: 200px; width: 900px;"src="monitoring_2.png">
+                        <img style="height: 200px; width: 900px;"src="img/monitoring_2.png">
                         <br><br>
                         <p class='smaller-txt'>It can also be useful for monitoring js package versions if you have access to package.json or just for raw js files if you can be bothered parsing through the js. It can be handy for detecting new features added to an app and also finding new endpoints. Here is a made up example of the kinds of things you can find in js files. </p>
                         
-                        <img style="height: 300px; width: 900px;"src="monitoring_3.png">
+                        <img style="height: 300px; width: 900px;"src="img/monitoring_3.png">
                         <br><br>
                         <p class='smaller-txt'>I was able to do this by using Discord web hooks, and curl. The script uses curl for the requests, then hashes the new file and compares it with the old file and will send the diff as a message if there are changes. Just add your own discord web hook, and change the url and set it to a cron job, and you will have automated monitoring sent to your Discord.</p>
                         

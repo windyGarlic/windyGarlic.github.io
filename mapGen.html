@@ -1,0 +1,78 @@
+                <!DOCTYPE html>
+                <html>
+                    <header>
+                        <link rel= 'stylesheet' href="index.css">
+                    </header>
+                    <body>
+                        <section class='header1'>
+                            <img src="img/banner.png" alt="Background Image" class="background-image">
+                            <nav>
+                                <a href="index.html"><img src=''></a> 
+                                <div class='nav-links' id="navLinks">
+                                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                                    <ul>
+                                        <li><a href="index.html" type="html/text">HOME</a></li>
+                                        <li><a href="about.html" type="html/text">ABOUT</a></li>
+                                        <!-- <li><a href="">BLOG</a></li>-->
+                                    </ul>
+                                    <h1>Generating Pixilated Land Maps With Python</h1>
+                                </div>
+                            </nav>
+                        </section>
+                        <main>
+                            <section class="align">
+                                <article class="smaller-txt">
+                                    <p class="smaller-txt">I have been thoroughly enjoying programming lately, it strikes such an interesting balance between creativity and science. It is a great reflection of this world. That's probably why my favorite thing to program recently  is this world, or rather simulations of this world. And thus begins my next project. Maps!</p>
+
+                                    <img style="height: 420px; width: 680px;" src="img/map_rivers.png">
+
+                                    <h2>Overview</h2>
+                                    <p class="smaller-txt">I made this map generator with pygame, it currently has land, water, tree and mountain tiles that are dynamically generated based on user supplies settings. You can tailor the amount of tree, water and mountain tiles in the options menu. </p>
+
+                                    <img src="img/map_settingManger.png">
+
+                                    <h2>Settings Management</h2>
+                                    <p class="smaller-txt">I created this SettingsManager class to handle loading and saving the setting. The settings get saved to a file called setting.json so they remain persistent. </p>
+
+                                    <img style="height: 320px; width: 500px;" src="img/map_code_1.png">
+
+
+                                    <h2>Algorithms</h2>
+                                    <p class="smaller-txt">The major roadblock i ran into was making things look realistic, there is much chaos in nature, but there is also so much structure and rules. Chaos and randomness, yet structure and rules reminds me of <i>Conway's Game of Life.</i> So i decided to try and implement a cellular automata algorithm to have the mountains and trees for in more <i>"natural"</i> patterns. </p>
+
+                                    <img style="height: 320px; width: 500px;" src="img/map_code_2A.png"> <br>
+                                    <img style="height: 120px; width: 500px;" src="img/map_code_2B.png">
+
+                                    <h2>Use cases</h2>
+                                    <b>Education:</b><p class="smaller-txt">The map generator serves as an educational tool for learning about procedural generation, terrain modeling, and graphical representation of landscapes.</p>
+                                    <b>Simulations</b><p class="smaller-txt">I plan in integrating maps into my life.py simulation, check out my other article here: <a href="simulation.html" >Simulating Life with Python</a> </p>
+                                    <b>World Building/Games:</b><p>Can be used to create fantasy maps for creative writing or rpg games.</p>
+
+                                    <h2>Conclusion</h2>
+                                    <p>This has been a fun project, that has increased my programming skills as well as my knowledge geography and earth science. I encourage you to play around with the application. Make some maps, change the settings and play around with the code, have fun! 
+
+                                        I do have some features in mind that i'm planing on adding, but first i have some optimizing to do. Next will be rivers!</p>
+
+
+                                    <b>Code:</b><a href="https://github.com/windyGarlic/Pixel-map-generator"> Map Generator</a>
+
+                                    <p>Here are some example maps the application has made:</p>
+
+                                    <img style="height: 420px; width: 680px;" src="img/map_extra_1.png">
+                                    <img style="height: 420px; width: 680px;" src="img//map_extra_2.png">
+                                    <img style="height: 420px; width: 680px;" src="img//map_extra_3.png">
+                                    <img style="height: 420px; width: 680px;" src="img//map_extra_4.png">
+                                    <img style="height: 420px; width: 680px;" src="img//map_extra_5.png">
+                                    
+
+
+                                    <img>
+
+                                </article>
+                            </section>
+                        </main>
+                    </body>
+                    <footer>
+                        <p class="smaller-txt">2024 windyGarlic - Have a nice day.</p>
+                    </footer>
+                </html>
