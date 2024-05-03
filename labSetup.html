@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel= 'stylesheet' href="index.css">
+    </header>
+    <body>
+        <section class='header1'>
+            <img src="img/banner.png" alt="Background Image" class="background-image">
+            <nav>
+                <a href="index.html"><img src=''></a> 
+                <div class='nav-links' id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html" type="html/text">HOME</a></li>
+                        <li><a href="about.html" type="html/text">ABOUT</a></li>
+                        <!-- <li><a href="">BLOG</a></li>-->
+                    </ul>
+                    <h1>WebApp Pentest Lab</h1>
+                </div>
+            </nav>
+        </section>
+        <main>
+            <section class="align">
+                <article class="smaller-txt">
+
+                    <p>Here is a guide to set up quick, but effective penetration testing lab. We will start with a focus on Web App testing, but this lab can be expanded upon for network testing in the future. </p>
+
+                    
+
+                    <ul>VM’s:</ul>
+                    <li>Ubuntu server 22.04.3 - Application server</li>
+                    <li>Debian 11 Linux - Admin PC</li>
+                    <li>Kali Linux - Attack machine</li>
+
+                    <p>Make sure all the VM’s are in the same Nat Network</p>
+                    <img style="height: 420px; width: 680px;" src="img/lab_1.png">
+
+                    <p>We will start with the application server, after installation all we need to do is set up ssh.
+
+                    We will be interacting with the server via the admin PC from now on.</p>
+                    <img style="height: 420px; width: 680px;" src="img/lab_2.png">
+
+
+                    <a href=""></a>
+
+                    <p>We will use the admin PC to ssh into the App Server, from here we will want to install docker.</p>
+                    <img style="height: 500px; width: 680px;" src="img/lab_3.png">
+
+
+                    <p>Once we have docker set up we can run juice shop with this command -</p>
+
+                    <b>docker container run -d -e NODE_ENV=unsafe --restart=on-failure --name juice_shop -p 8002:3000 bkimminich/juice-shop</b>
+
+                    <img style="height: 180px; width: 680px;padding-top: 20px;" src="img/lab_4.png">
+
+                    <img style="height: 420px; width: 680px;padding-top: 20px;" src="img/lab_5.png">
+
+                    <p>And we now have OWASP Juiceshop running on port 8002 of our application server.</p>
+
+                    <p>Next we want to set up DVWA by writing a docker-compose.yaml file to configure the database.</p>
+
+                    <br>
+                <pre>
+                    version: "3.9"
+
+                    services:
+                      db:
+                        image: mysql:5.7
+                        restart: always
+                        volumes:
+                          - db_data:/var/lib/mysql
+                        environment:
+                          MYSQL_ROOT_PASSWORD: damnvulnerable
+                          MYSQL_DATABASE: dvwa
+                          MYSQL_USER: dvwa
+                          MYSQL_PASSWORD: damnvulnerable
+                        
+                      dvwa:
+                        depends_on:
+                          - db
+                        image: cytopia/dvwa:php-8.0-0.1
+                        volumes:
+                          - dvwa_data:/var/www/html
+                        ports:
+                          - "8001:80"
+                        restart: always
+                        environment:
+                          MYSQL_HOSTNAME: db
+                          MYSQL_USERNAME: root
+                          MYSQL_PASSWORD: damnvulnerable
+                          MYSQL_DATABASE: dvwa
+                    volumes:
+                      db_data: {}
+                      dvwa_data: {}
+                </pre>
+                <br>
+
+                    <p>We can run this with - </p>
+
+                    <b>docker-compose -f docker-compose.yaml up<br></b>
+
+                    <img style="height: 420px; width: 680px; padding-top: 20px;" src="img/lab_6.png">
+
+                    <p>We now have DVWA running of port 8001 of the application server. </p>
+
+                    <p>Just like that we can launch our Kali Linux machine and start attacking a network with a server running two vulnerable web applications. This network is competely set up now, so all we have to do is turn on the app server and we are good to go.<br><br>Happy Hacking!</p>
+
+
+                </article>
+            </section>
+        </main>
+    </body>
+    <footer>
+        <p class="smaller-txt">2024 windyGarlic - Have a nice day.</p>
+    </footer>
+</html>
