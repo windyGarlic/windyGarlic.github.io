@@ -26,7 +26,7 @@
 
                     <p>Here is a guide to set up quick, but effective penetration testing lab. We will start with a focus on Web App testing, but this lab can be expanded upon for network testing in the future. </p>
 
-                    <img src="img/lab_tmb.png" style="height: 420px; width: 680px;">
+                    <img src="img/lab_tmb.png" class="bigger-img">
 
 
                     <ul>VM’s:</ul>
@@ -40,22 +40,22 @@
                     <p>We will start with the application server, after installation all we need to do is set up ssh.
 
                     We will be interacting with the server via the admin PC from now on.</p>
-                    <img style="height: 420px; width: 680px;" src="img/lab_2.png">
+                    <img class="bigger-img"src="img/lab_2.png">
 
 
                     <a href=""></a>
 
                     <p>We will use the admin PC to ssh into the App Server, from here we will want to install docker.</p>
-                    <img style="height: 500px; width: 680px;" src="img/lab_3.png">
+                    <img class="bigger-img" src="img/lab_3.png">
 
 
                     <p>Once we have docker set up we can run juice shop with this command -</p>
 
                     <b>docker container run -d -e NODE_ENV=unsafe --restart=on-failure --name juice_shop -p 8002:3000 bkimminich/juice-shop</b>
 
-                    <img style="height: 180px; width: 680px;padding-top: 20px;" src="img/lab_4.png">
+                    <img class="bigger-img" src="img/lab_4.png">
 
-                    <img style="height: 420px; width: 680px;padding-top: 20px;" src="img/lab_5.png">
+                    <img class="bigger-img" src="img/lab_5.png">
 
                     <p>And we now have OWASP Juiceshop running on port 8002 of our application server.</p>
 
@@ -63,37 +63,36 @@
 
                     <br>
                 <pre>
-                    version: "3.9"
-
-                    services:
-                      db:
-                        image: mysql:5.7
-                        restart: always
-                        volumes:
-                          - db_data:/var/lib/mysql
-                        environment:
-                          MYSQL_ROOT_PASSWORD: damnvulnerable
-                          MYSQL_DATABASE: dvwa
-                          MYSQL_USER: dvwa
-                          MYSQL_PASSWORD: damnvulnerable
-                        
-                      dvwa:
-                        depends_on:
-                          - db
-                        image: cytopia/dvwa:php-8.0-0.1
-                        volumes:
-                          - dvwa_data:/var/www/html
-                        ports:
-                          - "8001:80"
-                        restart: always
-                        environment:
-                          MYSQL_HOSTNAME: db
-                          MYSQL_USERNAME: root
-                          MYSQL_PASSWORD: damnvulnerable
-                          MYSQL_DATABASE: dvwa
-                    volumes:
-                      db_data: {}
-                      dvwa_data: {}
+  version: "3.9"
+  services:
+    db:
+      image: mysql:5.7
+      restart: always
+      volumes:
+        - db_data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: damnvulnerable
+        MYSQL_DATABASE: dvwa
+        MYSQL_USER: dvwa
+        MYSQL_PASSWORD: damnvulnerable
+      
+    dvwa:
+      depends_on:
+        - db
+      image: cytopia/dvwa:php-8.0-0.1
+      volumes:
+        - dvwa_data:/var/www/html
+      ports:
+        - "8001:80"
+      restart: always
+      environment:
+        MYSQL_HOSTNAME: db
+        MYSQL_USERNAME: root
+        MYSQL_PASSWORD: damnvulnerable
+        MYSQL_DATABASE: dvwa
+  volumes:
+    db_data: {}
+    dvwa_data: {}
                 </pre>
                 <br>
 
@@ -101,7 +100,7 @@
 
                     <b>docker-compose -f docker-compose.yaml up<br></b>
 
-                    <img style="height: 420px; width: 680px; padding-top: 20px;" src="img/lab_6.png">
+                    <img class="bigger-img" src="img/lab_6.png">
 
                     <p>We now have DVWA running of port 8001 of the application server. </p>
 

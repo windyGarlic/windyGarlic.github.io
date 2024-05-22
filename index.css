@@ -10,8 +10,9 @@ h1 {
   font-weight: bold;
 }
 
-bt2 {
-  padding-right: 30px;
+.bt2 {
+  padding-left: 27%;
+
 }
 
 .blog-title {
@@ -20,7 +21,7 @@ bt2 {
   text-shadow: 2px 2px 2px #430889;
   font-weight: bold;
   letter-spacing: 1px;
-  padding-left: 420px;
+  padding-left: 72%;
 }
 
 .background-image {
@@ -77,13 +78,14 @@ code {
 }
 
 .bigger-img {
-  width: 800px;
-  height: 500px;
+  width: 80%;
+  height: 30%;
 }
 
+
 .not-so-big-img {
-  width: 500px;
-  height: 350px;
+  width: 80%;
+  height: 50%;
 }
 
 .code {
@@ -103,9 +105,9 @@ code {
 
 .align {
   padding: 0 15% 0 5%; /* Adjust the padding values as needed */
-  width: 40%; /* Set the width of the content to 60% */
+  width: 60%; /* Set the width of the content to 60% */
   margin: 0 auto;
-  padding-right: 40%;
+  padding-right: 0%;
 }
 .info {
   background: #929292;
@@ -114,7 +116,7 @@ code {
   padding: 10px;
   border-radius: 10px;
   font-size: 22px;
-  width: 67%;
+  width: 96%;
   padding-left: 70px;
 }
 
@@ -139,6 +141,8 @@ nav img{
     display:inline-block;
     padding: 10px 25px;
     position: relative;
+    padding-right: 0px;
+
     
 } 
 

@@ -40,48 +40,48 @@
                     <br>
                         <p class='smaller-txt'>I often find the above mentioned files publicly exposed on websites. Ill come across pages like this and think sweet this will be easy, only to realize they are doing the right thing and not putting the API key in. Although it does makes me wonder if they have done the right thing every single time. </p>
                         
-                        <img style="height: 220px; width: 900px;"src="img/monitoring_1.png">
+                        <img class="bigger-img">
                         <br><br>
                         <p class='smaller-txt'>How cool would it be to get a notification of any changes made to this page, so if they ever accidentally  leak the key it would be sent straight to your phone. Or something like this page here, this page is dynamically created, and it rotates through different clientIP addresses over time. These few lines of bash can send you a message with the IP address when it changes. </p>
                         
-                        <img style="height: 200px; width: 900px;"src="img/monitoring_2.png">
+                        <img class="bigger-img" src="img/monitoring_2.png">
                         <br><br>
                         <p class='smaller-txt'>It can also be useful for monitoring js package versions if you have access to package.json or just for raw js files if you can be bothered parsing through the js. It can be handy for detecting new features added to an app and also finding new endpoints. Here is a made up example of the kinds of things you can find in js files. </p>
                         
-                        <img style="height: 300px; width: 900px;"src="img/monitoring_3.png">
+                        <img class="bigger-img" src="img/monitoring_3.png">
                         <br><br>
                         <p class='smaller-txt'>I was able to do this by using Discord web hooks, and curl. The script uses curl for the requests, then hashes the new file and compares it with the old file and will send the diff as a message if there are changes. Just add your own discord web hook, and change the url and set it to a cron job, and you will have automated monitoring sent to your Discord.</p>
                         
                         <h2>Script</h2>
                         <pre style="color: limegreen;" class="smaller-txt">
                         
-    #!/bin/bash
+#!/bin/bash
 
-    <b>URL</b>="https://example.com/config.json"
-    <b>NEW_FILE</b>="new.example.config.json"
-    <b>OLD_FILE</b>="example.config.json"
-    <b>DISCORD_WEBHOOK</b>="https://discord.com/api/webhooks/123456789/
-    asfxxxxxxxxxxxxx8E-DxxxxxxxxxZ-IWxxxxxxxxxxxxxxxxxdiIzEyG"
+<b>URL</b>="https://example.com/config.json"
+<b>NEW_FILE</b>="new.example.config.json"
+<b>OLD_FILE</b>="example.config.json"
+<b>DISCORD_WEBHOOK</b>="https://discord.com/api/webhooks/123456789/
+asfxxxxxxxxxxxxx8E-DxxxxxxxxxZ-IWxxxxxxxxxxxxxxxxxdiIzEyG"
 
-    if [ ! -e "<b>$OLD_FILE</b>" ]; then
-        <b style='color: blue'>curl</b> <b>$URL</b> > <b>$OLD_FILE</b>
+if [ ! -e "<b>$OLD_FILE</b>" ]; then
+    <b style='color: blue'>curl</b> <b>$URL</b> > <b>$OLD_FILE</b>
+else
+    <b style='color: blue'>curl</b> "<b>$URL</b>" > "<b>$NEW_FILE</b>"
+
+    <b>x</b>=$(sha256sum "<b>$NEW_FILE</b>" | awk "{print $1}")
+    <b>y</b>=$(sha256sum "<b>$OLD_FILE</b>" | awk "{print $1}")
+
+    if [ "<b>$x</b>" = "<b>$y</b>" ]; then
+            rm "<b>$NEW_FILE</b>"
     else
-        <b style='color: blue'>curl</b> "<b>$URL</b>" > "<b>$NEW_FILE</b>"
-
-        <b>x</b>=$(sha256sum "<b>$NEW_FILE</b>" | awk "{print $1}")
-        <b>y</b>=$(sha256sum "<b>$OLD_FILE</b>" | awk "{print $1}")
-
-        if [ "<b>$x</b>" = "<b>$y</b>" ]; then
-                rm "<b>$NEW_FILE</b>"
-        else
-                <b style='color: blue'>echo</b> "<b>$URL</b>" > diff.txt
-                <b style='color: blue'>echo</b> "---------------------------" >> diff.txt
-                <b style='color: blue'>echo</b> "" >> diff.txt
-                <b style='color: blue'>diff</b> "<b>$OLD_FILE</b>" "<b>$NEW_FILE</b>" >> diff.txt
-                <b style='color: blue'>curl</b> -X "POST" -F "file=@diff.txt" "<b>$DISCORD_WEBHOOK</b>"
-        fi
+            <b style='color: blue'>echo</b> "<b>$URL</b>" > diff.txt
+            <b style='color: blue'>echo</b> "---------------------------" >> diff.txt
+            <b style='color: blue'>echo</b> "" >> diff.txt
+            <b style='color: blue'>diff</b> "<b>$OLD_FILE</b>" "<b>$NEW_FILE</b>" >> diff.txt
+            <b style='color: blue'>curl</b> -X "POST" -F "file=@diff.txt" "<b>$DISCORD_WEBHOOK</b>"
     fi
-                        
+fi
+                    
                         </pre>
                         
                         <h2>Disclaimer</h2>
