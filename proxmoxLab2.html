@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel= 'stylesheet' href="index.css">
+    </header>
+    <body>
+        <section class='header1'>
+            <img src="img/banner.png" alt="Background Image" class="background-image">
+            <nav>
+                <a href="index.html"><img src=''></a> 
+                <div class='nav-links' id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html" type="html/text">HOME</a></li>
+                        <li><a href="about.html" type="html/text">ABOUT</a></li>
+                        <!-- <li><a href="">BLOG</a></li>-->
+                    </ul>
+                    <h1>Proxmox Home Lab Part 2 - PostgreSQL Server</h1>
+                </div>
+            </nav>
+        </section>
+        <main>
+            <section class="align">
+                <article class="smaller-txt">
+
+<p>I've decided to push the web server guide back a bit, as i have something currently in the works for it. So instead, we'll walk through the steps to set up a PostgreSQL server. This will include steps to create a new user, and assign the correct permissions to the new user to ensure your PostgreSQL server is secure and ready for use.</p>
+
+<h2>Step 1: Install PostgreSQL</h2>
+<p>First, make sure PostgreSQL is installed on your system. For Debian-based systems (like Ubuntu), you can install it using:</p>
+<pre class="code-block">
+<b>sudo apt</b> update
+<b>sudo apt install</b> postgresql postgresql-contrib</pre>
+
+<p>We then want to start the service, and enable it so that it wil start when we boot the server.</p>
+<pre class="code-block">
+<b>sudo systemctl</b> start postgresql
+<b>sudo systemctl</b> enable postgresql</pre>
+
+
+<h2>Step 2: Access the PostgreSQL Command Line</h2>
+<p>With that done, we should be able at access the postgres user. </p>
+<pre class="code-block"><b>sudo -i -u </b>postgres</pre>
+<p>Once we are logged in as the postgres user, we can access the CLI</p></p>
+<pre class="code-block"><b>psql</b></pre>
+         
+                    
+<h2>Step 3: Secure the PostgreSQL Root Account</h2>
+<p>By default, PostgreSQL uses the postgres user as the root account. It's crucial to set a strong password for this account.
+In the PostgreSQL CLI, set a password for the postgres user:</p>
+<pre class="code-block"><b>\password </b>postgres</pre>
+<p>You'll be prompted to enter and confirm the new password.</p>
+
+
+<h2>Step 4: Create a User and Database</h2>
+<p>To create a new user, use the following command, replacing newuser with your new username and newpassword with your new password:</p>
+<pre class="code-block"><b>CREATE USER</b> newuser <b>WITH PASSWORD </b>'newpassword';</pre>
+
+<p>We can use this command to check the users and their roles and attributes</p>
+<pre class="code-block"><b>\du</b></pre>
+<img class="bigger-img" style="width: 90%; padding-left: 5%; padding-top: 50px;" src="img/proxmox2tmb.png">
+
+<p>To create a database you can use the comand</p>
+<pre class="code-block"><b>CREATE DATABASE</b> yourdatabase;</pre>
+
+
+
+<h2>Step 5: Assign Permissions to the New User</h2>
+<p>Next, assign appropriate permissions to the new user. For example, to grant all privileges on a specific database to the new user, use:</p>
+<pre class="code-block"><b>GRANT ALL PRIVILEGES ON DATABASE </b>yourdatabase <b>TO</b> newuser;</pre>
+<p>We now have a user account that has access and premissions to the specified database. We can now create tables and start adding data.</p>
+
+<h2>Step 6: Disable Remote Access</h2>
+<p>You will want set the hosts that are allowed to connect. This is a step that everyone should take to secure their psql server and data. We can do this by checking the postgresql.conf.</p>
+
+<pre class="code-block"><b>exit</b>
+<b>sudo nano</b> /etc/postgresql/14/main/postgresql.conf</pre>
+
+<p>* Note - That <b>/14/</b> is a version number. Depending on your version of postgrsql, this number may be different.</p>
+
+<p>We will want to check this file and find the line that says <b>listen_adresses = </b> and change it to:</p>
+
+<pre class="code-block">listen_adresses = <b>'localhost'</b></pre>
+
+<img class="bigger-img" style="width: 90%; padding-left: 5%; padding-top: 50px;" src="img/proxmox2-conf.png">
+
+<p>This will disable remote access to PostgrSQL. I would recomend doing this and configuring the allowed hosts one by one as needed by editing the <b>/etc/postgresql/14/main/pg_hba.conf</b> file.</p>
+
+<img class="bigger-img" style="width: 90%; padding-left: 5%; padding-top: 20px; padding-bottom: 20px;" src="img/proxmox2-hba.png">
+
+<p> Or you could follow this <a href="https://www.cherryservers.com/blog/how-to-configure-ssl-on-postgresql">guide to configure ssl for postgresql</a>. </p> 
+
+<p>After making any changes to the config files, you should restart the service.</p>
+<pre class="code-block"><b>sudo systemctl</b> restart postgresql</pre>
+
+
+<h2>Conclusion</h2>
+
+<p> We can now access the server with the following command</p>
+<pre class="code-block"><b>psql</b> -U newuser -d yourdatabase -h 127.0.0.1</pre>
+
+
+<p>
+        By following these steps, we have set up a PostgreSQL server, created a new user, and assigned appropriate permissions to the new user. Your PostgreSQL server is now configured and ready to use.</p>
+                </article>
+            </section>
+        </main>
+    </body>
+    <footer>
+        <p class="smaller-txt">2024 windyGarlic - Have a nice day.</p>
+    </footer>
+</html>

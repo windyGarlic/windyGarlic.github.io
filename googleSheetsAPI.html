@@ -47,15 +47,14 @@
                     <h3>Step 2: Requirements</h3>
                     <p class="smaller-txt"> We will also need to get the python modules to start interacting with the sheets. run te following command: </p>
 
-                    <pre class="code">pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-                    </pre>
+                    <pre class="code-block">pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib                    </pre>
 
                     <h2>Code</h2>
 
                     <p class="smaller-txt">We should have everything we need to start writing code. We will have to provide some information such as spreadsheet Id, were also going to want to implement code to generate a token so we don't have to authenticate every time.</p>
 
 
-                    <pre class="code" >
+                    <pre class="code-block" >
     <b class="b">from </b>google.auth.transport.requests import Request
     <b class="b">import </b>os
     <b class="b">from </b>httplib2 import Credentials
@@ -83,8 +82,7 @@
     <b class="p">return</b> <b>credentials</b>               
                     </pre>
                     <p class="smaller-txt">Here are all the imports we will need. We also have two variables, SCOPES and SPREADSHEET_ID we will set the spreadsheet id later. There is also a function defined called auth() which will handle authentication and the creation of the token.<br> The next step will be to make three functions. One will be for handling querying data the other will export the data to the google sheet and the last will be to find the next empy row on the sheet.</p>
-
-                    <pre class="code">                        
+                    <pre class="code-block">                        
     def <b class='g'>index</b>(credentials, sheetName, startIndex, endIndex):
         <b>service</b> = build('sheets', "v4", <b>credentials</b>=credentials)
         <b>sheets</b> = service.spreadsheets()
@@ -107,8 +105,7 @@
         <b>result</b> = sheets.values().get(spreadsheetId=SPREADSHEET_ID, <b>range</b>=f"Sheet1!A1:A500").execute()
         <b>values</b> = result.get('values', [])
         <b>cellNumber</b> = len(values) + 1
-        return <b>cellNumber</b>
-        </pre>
+        return <b>cellNumber</b></pre>
                 </article>
 
                 <article>
@@ -120,18 +117,16 @@
                     Now we should have all the functions we need to interact with the sheet. To upload some data to the sheet we will used getCellNumber(), and populate().
                 </article>
 
-                <pre class="code">
+                <pre class="code-block">
     <b>credentials</b> = <b class=g>auth</b>()
     <b>cellNumber</b> = <b class=g>getCellNumber</b>(credentials, SPREADSHEET_ID)
     <b class=g>populate</b>(cellNumber,'<b class="b">Sheet1</b>', '<b class="b">A</b>', "<b class="b">row 1</b>")
-    <b class=g>populate</b>(cellNumber,'<b class="b">Sheet1</b>', '<b class="b">B</b>', "<b class="b">row 1, col 2</b>")
-                </pre>
+    <b class=g>populate</b>(cellNumber,'<b class="b">Sheet1</b>', '<b class="b">B</b>', "<b class="b">row 1, col 2</b>")</pre>
                 <article class="smaller-txt">
                     If we run this code, we should see a link that we can use to sign in to our google account. Once we do this, token.json will be made and you will not need to authenticate until the token expires.<br> If we check the sheet we should see the data that we just uploaded.<br> Now to get that data back into python we can use the index() function.
                 </article>
-                <pre class="code">
-    <b class=g>index</b>(credentials, '<b class=b>Sheet1</b>', '<b class=b>A1</b>', '<b class=b>B1</b>')
-                </pre>
+                <pre class="code-block">
+    <b class=g>index</b>(credentials, '<b class=b>Sheet1</b>', '<b class=b>A1</b>', '<b class=b>B1</b>')</pre>
                 <article class="smaller-txt">We should see that data we just uploaded printed to our terminal. Obviously this is just an example, but you can see how this can be scaled up from here to handle massive data sets. The index function has many more use cases than just printing to the terminal. I have recently been using it in a workflow with matplotlib to directly make graphs based on the data in the spreadsheet. </article>
             </section>
         </main>

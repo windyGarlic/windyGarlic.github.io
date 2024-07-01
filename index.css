@@ -46,7 +46,7 @@ h2 {
 }
 
 b {
-  color: rgb(33, 219, 204)
+  color: rgb(248, 151, 25)
 }
 
 .p {
@@ -264,7 +264,7 @@ article {
 }
 
 article h2 {
-  color: lightblue;
+  color: rgb(69, 142, 167);
   text-shadow: 2px 2px 2px black;
 }
 
@@ -282,4 +282,24 @@ footer {
 article img {
   width: 200px;
   height: auto;
+}
+
+
+.code-block {
+  background-color: #f7f7f7; 
+  border: 1px solid #ffffff; 
+  border-radius: 5px; 
+  padding: 15px; 
+  font-family: 'Courier New', Courier, monospace; 
+  font-size: 14px;
+  color: #1b1b1b; 
+  overflow-x: auto; 
+  white-space: pre-wrap;
+  width: 80%;
+  padding: auto;
+  margin: auto;
+}
+
+.code-block {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
