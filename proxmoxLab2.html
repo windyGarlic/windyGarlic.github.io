@@ -67,7 +67,7 @@ In the PostgreSQL CLI, set a password for the postgres user:</p>
 <h2>Step 5: Assign Permissions to the New User</h2>
 <p>Next, assign appropriate permissions to the new user. For example, to grant all privileges on a specific database to the new user, use:</p>
 <pre class="code-block"><b>GRANT ALL PRIVILEGES ON DATABASE </b>yourdatabase <b>TO</b> newuser;</pre>
-<p>We now have a user account that has access and premissions to the specified database. We can now create tables and start adding data.</p>
+<p>We now have a user account that has access and permissions to the specified database. We can now create tables and start adding data.</p>
 
 <h2>Step 6: Disable Remote Access</h2>
 <p>You will want set the hosts that are allowed to connect. This is a step that everyone should take to secure their psql server and data. We can do this by checking the postgresql.conf.</p>
@@ -86,7 +86,7 @@ In the PostgreSQL CLI, set a password for the postgres user:</p>
 <p>This will disable remote access to PostgrSQL. I would recomend doing this and configuring the allowed hosts one by one as needed by editing the <b>/etc/postgresql/14/main/pg_hba.conf</b> file.</p>
 
 <img class="bigger-img" style="width: 90%; padding-left: 5%; padding-top: 20px; padding-bottom: 20px;" src="img/proxmox2-hba.png">
-
+<p>Reference: <a href="https://www.postgresql.org/docs/7.0/security.htm">https://www.postgresql.org/docs/7.0/security.htm</a></p>
 <p> Or you could follow this <a href="https://www.cherryservers.com/blog/how-to-configure-ssl-on-postgresql">guide to configure ssl for postgresql</a>. </p> 
 
 <p>After making any changes to the config files, you should restart the service.</p>
