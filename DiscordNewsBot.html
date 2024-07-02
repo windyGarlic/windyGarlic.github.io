@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel= 'stylesheet' href="index.css">
+    </header>
+    <body>
+        <section class='header1'>
+            <img src="img/banner.png" alt="Background Image" class="background-image">
+            <nav>
+                <a href="index.html"><img src=''></a> 
+                <div class='nav-links' id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html" type="html/text">HOME</a></li>
+                        <li><a href="about.html" type="html/text">ABOUT</a></li>
+                        <!-- <li><a href="">BLOG</a></li>-->
+                    </ul>
+                    <h1>Creating a Discord News Bot</h1>
+                </div>
+            </nav>
+        </section>
+        <main>
+            <section class="align">
+                <article class="smaller-txt">
+
+                    <p>Discord web hooks are awesome, and I really don't think people are using them as much as they should. Discord web hooks are just a URL that can be interacted with using programing languages or even curl. You can post things to it with a simple <b>curl -X 'POST'</b> or you could even post a whole file with <b>curl -X 'POST' -F "file=@file.txt"</b>. These will be sent as a Discord message to whatever channel you specify on your own Discord server. This is great because you can send it to a private channel, or invite people to your server and send it to a public channel. Its also great because you can enable notifications, and if you have the mobile Discord app, you will get a notification send directly to your phone. Check out  <a href="monitorClientSideCode.html">monitorClientSideCode</a> For another example of how this can be incredibly useful for DevSecOps and BugBounty. As for this article, I will show you how to set up a Discord news bot.</p>
+
+
+                    <h2>Step 1 - Pick a Site to Scrape</h2>
+
+                    <p>You could set up a sophisticated scraper with beautiful soup or any other handy web scraping packages, but for this we will keep it simple and use my personal favorite quick and dirty web scraper: curl + grep</p>
+
+                    <p>Fist things first though, we need to pick a news site to scrape. <a href="https://bleepingcomputer.com/">BleepingComputer</a> is my go to news site for cybersecurity news. We can filter for what were specifically interested in, in my case I will add /news/security to the URL.</p>
+
+                    <p>If we curl this down with we will get the entire html content of the page.</p>
+
+                    <pre class="code-block"><b>curl</b> https://bleepingcomputer.com/news/security</pre>
+
+                    <p> Now we can get all the URL's with:</p>
+
+                    <pre class="code-block"><b>curl</b> https://bleepingcomputer.com/news/security | <b>grep</b> '&lt;a ' </pre>
+
+                    <p>This is still a bit ugly, but I see that all of the links that we are looking for are inside a 'h4' tag, and/or we can just grep for the 'https' pattern:</p>
+
+                    <pre class="code-block"><b>curl</b> https://bleepingcomputer.com/news/security | <b>grep</b> '&lt;h4&gt; &lt;a' | grep 'https://'</pre>
+                    <p>This should get us exactly what we need. Now all we need to do is</p>
+                    <ul>
+                        <li>1. Write the URL's to a file</li>
+                        <li>2. Strip the remaining tags</li>
+                        <li>3. Add unique URL's to a master list</li>
+                        <li>4. Send the URL to Discord if its not in the master list
+                        </li>
+                    </ul>
+
+                    <h2>Step 2 - Python Script</h2>
+                    <p>We can do this with a fairly simple Python script:</p>
+
+                    <pre class="code-block"><b>import</b> re
+
+<b>url_pattern</b> = re.compile(r'href="([^"]+)"')
+<b>text_pattern</b> = re.compile(r'>([^&lt;]+)&lt;')
+                        
+<b>daily_curl_file</b> = '/path/to/the/curl_file'
+<b>article_master_list</b> = '/path/to/the/master_list'
+                        
+                        
+def sort():
+    with open(<b>daily_curl_file</b>, 'r') as <b>f</b>:
+        <b>unsorted</b> = <b>f</b>.read()
+                                
+        <b>urls</b> = <b>url_pattern</b>.findall(<b>unsorted</b>)
+        <b>texts</b> = <b>text_pattern</b>.findall(<b>unsorted</b>)
+        <b>urls_and_texts</b> = dict(zip(<b>urls</b>, <b>texts</b>))
+                        
+        return <b>urls_and_texts</b>
+                        
+                        
+def check(<b>urls</b>):
+    with open(<b>article_master_list</b>, 'r') as <b>f</b>:
+        <b>master_list</b> = <b>f</b>.read()
+        <b>splt</b> = <b>master_list</b>.split()
+        <b>new_articles</b> = []
+                        
+        for <b>url</b> in <b>urls</b>:
+            if <b>url</b> not in <b>splt</b>:
+                <b>new_articles</b>.append(<b>url</b>)
+                        
+    return <b>new_articles</b>
+                        
+                        
+def write(<b>urls</b>):
+    with open(<b>article_master_list</b>, 'a') as <b>f</b>:
+        for <b>url</b> in <b>urls</b>:
+            <b>f</b>.write(<b>url</b> + '\n')
+                        
+                        
+<b>new_list</b> = sort()
+<b>new_list_keys</b> = list(<b>new_list</b>.keys())
+                        
+<b>unique_articles</b> = check(<b>new_list_keys</b>)
+
+<b>unique_articles_dict</b> = {url: <b>new_list</b>[<b>url</b>] for <b>url</b> in <b>unique_articles</b>}
+                        
+<b>unique_urls</b> = list(<b>unique_articles_dict</b>.keys())
+                        
+write(<b>unique_urls</b>)
+                        
+for <b>i,j</b> in <b>unique_articles_dict</b>.items():
+    print(<b>i</b>)</pre>
+
+                    <p>We start by importing re so we can strip the remaining tags using regex, we will then specify the location of the files. I would recommend using full paths here. You will need full paths if you want to set this as a cron job. </p>
+
+                    <p>Next we will define 3 functions: sort(), check(), write()</p>
+                    <ul>
+                        <li>sort() will strip the tags</li>
+                        <li>check() will return only the new URL's</li>
+                        <li>write() will add the new URL's to the master list</li>
+                    </ul>
+                    <p>Finally we print all the new news article URL's </p>
+
+                    <h2>Step 3 - Putting Everything Together With Bash</h2>
+
+                    <p>Now we just need to connect everything with bash.</p>
+
+                    <pre class="code-block">#!/bin/bash
+
+send_discord_message() {
+    local webhook_url="$1"
+    local message="$2"
+    local json="{\"content\":\"$message\"}"
+    
+<b>curl</b> -H "Content-Type: application/json" -X POST -d "$json" "$webhook_url"
+}
+
+<b>curl</b> https://www.bleepingcomputer.com/news/security -L | <b>grep</b> '&lt;h4&gt;&lt;a' | <b>grep</b> 'https://' &gt; /path/to/the/curl_file
+
+<b>/usr/bin/python3</b> /path/to/the/main.py &gt; /path/to/the/post_file.txt
+
+if [ -s /path/to/the/post_file.txt ]; then
+    while IFS= read -r line; do
+        send_discord_message "https://discord.com/api/webhooks/123456789/thisisyourwebhookurl" "$line"
+    <b>sleep</b> 5
+    done &lt; /path/to/the/post_file.txt
+    
+<b>rm</b> /path/to/the/post_file.txt
+fi</pre>
+
+                    <p>Lets start by defining a function that will send our URL's to the Discord web hook. We will then execute our simple curl web scraper and write the output to a file. Next we can execute out python script we just wrote to parse all of the ULR's. </p>
+                    <p>And finally we will write the logic to send the message to the web hook. We want to send each URL one at a time, and also wait after sending, we do this so that Discord has time to process the URL and display the thumbnail. If we don't do this, the message will just be a link with no image. </p>
+
+
+                    <h2>Step 4 - Running as a Cronjob</h2>
+
+                    <p>The Last thing we have to do is schedule this bash script as a cron job.</p>
+
+                    <pre class="code-block"><b>crontab</b> -e</pre>
+                    <p>We will add this line:</p>
+                    <pre class="code-block">0 8  * * *  /bin/bash /path/to/bash/script.sh</pre>
+                    <p>Now every morning at 8AM we will have our daily cyber security news articles sent directly to our phone.</p>
+
+                    <img class='bigger-img' src="img/discordBot1.png">
+
+                    <h2>Conculsion</h2>
+
+                    <p>By following these steps, you've successfully set up a powerful and efficient news bot that scrapes the latest cybersecurity news from BleepingComputer and posts it directly to your designated Discord channel. This automation not only keeps you updated with the latest developments in the cybersecurity world but also allows you to receive timely notifications right on your mobile device.</p>
+                    <p>Remember, this setup is just the beginning. You can further customize and expand this script to scrape other websites, filter different types of content, or integrate with other notification systems. The possibilities are endless, and the more you explore, the more you'll discover new ways to leverage automation in your projects.</p>
+
+                    <p>Happy hacking, and stay secure!</p>
+                </article>
+            </section>
+        </main>
+    </body>
+    <footer>
+        <p class="smaller-txt">2024 windyGarlic - Have a nice day.</p>
+    </footer>
+</html>
