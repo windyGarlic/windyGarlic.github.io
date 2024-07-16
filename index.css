@@ -81,6 +81,7 @@ code {
 .bigger-img {
   width: 100%;
   height: 30%;
+  padding-top: 50px;
 }
 
 .med-img {

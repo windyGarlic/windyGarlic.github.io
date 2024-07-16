@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel= 'stylesheet' href="index.css">
+    </header>
+    <body>
+        <section class='header1'>
+            <img src="img/banner.png" alt="Background Image" class="background-image">
+            <nav>
+                <a href="index.html"><img src=''></a> 
+                <div class='nav-links' id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html" type="html/text">HOME</a></li>
+                        <li><a href="about.html" type="html/text">ABOUT</a></li>
+                        <!-- <li><a href="">BLOG</a></li>-->
+                    </ul>
+                    <h1>Introduction To CI/CD Pipelines</h1>
+                </div>
+            </nav>
+        </section>
+        <main>
+            <section class="align">
+                <article class="smaller-txt">
+
+                    <h2>Prerequisites</h2>
+                    <p>Not necessary, but it will help</p>
+                    <ul>
+                        <li>Basic Bash Knowledge </li>
+                        <li>Basic Understanding of YAML</li>
+                        <li>Experience With Git is a Plus </li>
+                    </ul>
+
+                    <h2>Intro</h2>
+
+                    <p>What is a CI/CD pipeline? A CI/CD pipeline automates the integration, testing, and deployment of code changes. Continuous Integration (CI) ensures code changes are automatically tested and merged into a central repository. Continuous Deployment (CD) automates the release of code to production, making deployments fast and reliable.
+                    <br><br>
+                    That is the technical way of saying 'Do some things when I push code.' Often, CI checks ensure the new code that has been pushed doesn't break existing functionality. Continuous Integration (CI) involves automatically testing and validating code changes before merging them into the main branch. For our end goal, we will be focusing more on Continuous Deployment (CD), which is essentially 'automatically send my tested code to the live environment.' But for this example, let's first learn about the CI side.</p>
+
+                    <h2>Hello World</h2>
+
+                    <p>So lets get started. First things first, lets get familiar with GitLab, as that is where I will be building the CI/CD pipeline. Most of my experience so far with Git has been with GitHub. 
+                    <br><br>
+                    So after making an account with GitLab and failing the captcha a few times (They are getting ridiculous). I have created a repo called First Pipeline.</p>
+
+                    <img class="bigger-img" src="img/cicd1.png">
+
+                    <p>And here we go, our first pipeline. This is just a hello world script, and doesn't really do anything, but we will use it to make sure everything is working so far. There are a few things to keep in mind if we want this to work.</p>
+
+                    <ol>
+                        <li>The file must be called ".gitlab-ci.yml"</li>
+                        <br>
+                        <li>This is a yaml file, proper whitespace is very important when it comes to .yml files. (If you struggle with this you might benefit from a linter that can check your format for you). </li>
+                    </ol>
+
+
+
+                    <img class="bigger-img" src="img/cicd2.png">
+                    <p>Once we have verified our account, and committed the file, it should run automatically, we can then go to the repo on GitLab, click build, then pipeline in the left hand tab. Once there, we will click on the commit hash of our pipeline.</p>
+                    <img class="bigger-img" src="img/cicd2.5.png">
+
+                    <p>We then want to click the green tick.</p>
+
+                    <img class="bigger-img" src="img/cicd3.png">
+
+
+                    <p>Once there, we can see the logs for our pipeline, and we see that the pipeline script was executed. If we look further up, we can see that it is utilizing docker to do this.</p>
+
+                    <h2>Creating Our First Pipeline</h2>
+                    <p>If this is all working, and if you have some experience with Bash, you should be in a good position to start experimenting with pipelines.</p>
+
+                    <br>
+                    <br>
+                    <pre class="code-block">
+build pipe:
+    image: alpine
+    stage: build
+    script:
+        - echo "Builing pipe"
+        - mkdir pipe
+        - touch pipe/line.txt
+        - echo "oil" >> pipe/line.txt
+        - cat pipe/line.txt
+        - echo "water" >> pipe/line.txt
+                    </pre>
+
+                    <p>Lets start by creating a simple example job. We call it <b>build pipe</b>, then specify the docker image we want to use. If your aren't familiar, Alpine is a light weight Linux distro. I will cover <b>stage</b> later, next we start writing our script. This will simply make a directory, and a text file in the directory, then it will add the two lines of text to the file. </p>
+
+                    <br><br>
+                    <pre class="code-block">
+test pipe:
+    image: alpine
+    stage: test
+    script:
+        - test -f pipe/line.txt
+                    </pre>
+
+                    <p>We can now add a new blob to the YAML file. This script will check for the existence of the specified file. <br><br>
+                        If we were to run this pipeline right now it would fail. That's because both of the scripts will run concurrently meaning the file wont be created by the time it is checked.  </p>
+<br><br>
+                    <pre class="code-block">
+stages:
+    - build
+    - test</pre>
+
+                    <p>To remedy this we can add this <b>stages</b> key to the top of our YAML file. This will run the jobs in stages.</p>
+
+                    <p>If you were to run this, it would still fail and that's because once the first job is done it will close down the container, and start a new one for the next job. So we need to retain the information between container. To do that we can use artifacts. </p>
+                    <br>
+                    <br>
+                    <pre class="code-block">
+stages:
+    - build
+    - test
+
+build pipe:
+    image: alpine
+    stage: build
+    script: 
+        - echo "Builing pipe"
+        - mkdir pipe
+        - touch pipe/line.txt
+        - echo "oil" >> pipe/line.txt
+        - cat pipe/line.txt
+        - echo "water" >> pipe/line.txt 
+    <b style="color: blue;">artifacts:
+        paths:
+            - pipe
+        </b>
+test pipe:
+    image: alpine
+    stage: test
+    script:
+        - test -f pipe/line.txt 
+                    </pre>
+
+                    <p>This is what our final pipeline should look like. We have added the <b>artifacts</b> key, which contains <b>paths</b>, and the directory called <b>pipe</b> that we created at the start. This will save everything inside the folder. We will now commit our changes and see if it worked. </p>
+
+                    <img class="bigger-img" src="img/cicd4.png">
+
+
+                    <img class="bigger-img" src="img/cicd5.png">
+
+
+                    <p>We now have both jobs passing! </p>
+
+                    <h2>Conclusion</h2>
+
+                    <p>This has been a brief introduction to GitLab Pipelines at a beginner level. Just enough to get started, so I encourage you to experiment further with this and find out yourself how powerful pipelines can be.</p>
+
+                    <p>A CI/CD pipeline isn't just about automation, it's a systematic approach to ensuring code quality and reliability throughout the development lifecycle. By adding security practices directly into the development pipeline, CI/CD not only accelerates software delivery but also bolsters defenses against cyber threats. 
+                    <br><br>
+                    Embracing DevSecOps principles, and integrating security into every phase of development is something we should all be focusing on.</p>
+
+                    <h2>Learning Material</h2>
+                    
+                    <a href="https://www.youtube.com/watch?v=PGyhBwLyK2U&t=32s&ab_channel=freeCodeCamp.org
+                    "><b>FreeCodeCamp Youtube Video - </b><br> DevOps with GitLab CI Course - Build Pipelines and Deploy to AWS: </a> 
+
+
+                </article>
+            </section>
+        </main>
+    </body>
+    <footer>
+        <p class="smaller-txt">2024 windyGarlic - Have a nice day.</p>
+    </footer>
+</html>
